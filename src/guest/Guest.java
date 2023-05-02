@@ -6,29 +6,18 @@ import java.util.List;
 
 public class Guest {
     private String name;
-    private Date startOfBooking;
-    private Date endOfBooking;
 
-    public Guest(String name, Date startOfBooking, Date endOfBooking) {
+    public Guest(String name) {
         this.name = name;
-        this.startOfBooking = startOfBooking;
-        this.endOfBooking = endOfBooking;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setStartOfBooking(Date startOfBooking) {
-        this.startOfBooking = startOfBooking;
-    }
-
-    public void setEndOfBooking(Date endOfBooking) {
-        this.endOfBooking = endOfBooking;
-    }
 
     public static Guest createKees() {
-        return new Guest("Kees", '');
+        return new Guest("Kees");
     }
 
     public static List<Guest> createDefaultGuestList() {
