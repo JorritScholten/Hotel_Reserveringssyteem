@@ -1,10 +1,14 @@
 package room;
 
+import booking.Booking;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public abstract class Room {
     private int roomNumber;
     private boolean lockerIsActive;
+    protected List<Booking> bookings;
 
     //constructor
     public Room(int roomNumber) {
