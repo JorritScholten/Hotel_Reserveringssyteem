@@ -14,14 +14,16 @@ public class Booking {
     private final Guest guest;
     private final Date start;
     private final Date end;
+    private final boolean rentingLocker;
     /** Unique ID number for booking. */
     private final int id_code;
 
-    public Booking(Room room, Guest guest, Date startOfBooking, Date endOfBooking) {
+    public Booking(Room room, Guest guest, Date startOfBooking, Date endOfBooking, boolean rentLocker) {
         this.room = room;
         this.guest = guest;
         this.start = startOfBooking;
         this.end = endOfBooking;
+        this.rentingLocker = rentLocker;
         if (id_codes.isEmpty()) {
             id_code = 1;
         } else {

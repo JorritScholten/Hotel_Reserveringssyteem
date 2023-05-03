@@ -23,13 +23,13 @@ public abstract class BookableRoom extends Room implements Bookable {
      * @throws AlreadyBookedException when room is already booked at specified time.
      */
     @Override
-    public Booking Book(Guest guest, Date startOfBooking, Date endOfBooking)
+    public Booking Book(Guest guest, Date startOfBooking, Date endOfBooking, boolean rentLocker)
             throws AlreadyBookedException, IllegalArgumentException {
-        if (startOfBooking.after(endOfBooking)) {
-            throw new IllegalArgumentException("Invalid booking: it ends before it begins.");
+        if(!startOfBooking.before(endOfBooking)){
+            throw new IllegalArgumentException("Invalid booking: invalid start/end date.");
         }
         if (bookings.isEmpty()) {
-            Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+            Booking booking = new Booking(this, guest, startOfBooking, endOfBooking, rentLocker);
             bookings.add(booking);
             Bookable.BOOKINGS.add(booking);
             return booking;
@@ -54,7 +54,7 @@ public abstract class BookableRoom extends Room implements Bookable {
                 if (isBooked(startOfBooking) || isBooked(endOfBooking)) {
                     throw new AlreadyBookedException("Invalid booking: partial overlap of timeslot.");
                 } else {
-                    Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+                    Booking booking = new Booking(this, guest, startOfBooking, endOfBooking, rentLocker);
                     bookings.add(0, booking);
                     Bookable.BOOKINGS.add(booking);
                     return booking;
@@ -64,13 +64,13 @@ public abstract class BookableRoom extends Room implements Bookable {
                 if (isBooked(startOfBooking) || isBooked(endOfBooking)) {
                     throw new AlreadyBookedException("Invalid booking: partial overlap of timeslot.");
                 } else {
-                    Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+                    Booking booking = new Booking(this, guest, startOfBooking, endOfBooking, rentLocker);
                     bookings.add(booking);
                     Bookable.BOOKINGS.add(booking);
                     return booking;
                 }
             } else if (bookings.indexOf(next) + 1 == bookings.indexOf(previous)) {
-                Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+                Booking booking = new Booking(this, guest, startOfBooking, endOfBooking, rentLocker);
                 bookings.add(bookings.indexOf(previous) + 1, booking);
                 Bookable.BOOKINGS.add(booking);
                 return booking;
