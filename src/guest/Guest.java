@@ -1,7 +1,6 @@
 package guest;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Guest {
@@ -9,11 +8,6 @@ public class Guest {
 
     public Guest(String name) {
         this.name = name;
-    }
-
-
-    public static Guest createKees() {
-        return new Guest("Kees");
     }
 
     public static List<Guest> createDefaultGuestList() {
