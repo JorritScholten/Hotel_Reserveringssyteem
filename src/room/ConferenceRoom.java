@@ -30,21 +30,23 @@ public class ConferenceRoom extends Room implements Bookable {
             Booking previous = null, next = null;
             for (Booking b : bookings) {
                 if (b.getStart().after(endOfBooking)) {
-                    previous = b;
+                    next = b;
                     break;
                 }
             }
             for (int i = bookings.size() - 1; i >= 0; i--) {
                 if (bookings.get(i).getEnd().before(startOfBooking)) {
-                    next = bookings.get(i);
+                    previous = bookings.get(i);
                     break;
                 }
             }
             if (previous == null && next == null) {
                 throw new AlreadyBookedException("Booking encompasses all previous bookings.");
-            } else if (previous == null || next == null) {
+            } else if (previous == null) {
+
+            } else if (next == null) {
                 // check with isBooked() to see if startOfBooking or endOfBooking is in a timeslot
-            }else if(/* check if previous and next are directly after each other*/){
+            } else if (/* check if previous and next are directly after each other*/) {
                 // no problem
             } else {
                 throw new AlreadyBookedException("Booking encompasses at least 1 previous booking.");
