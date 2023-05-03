@@ -12,8 +12,8 @@ import java.util.List;
 public abstract class BookableRoom extends Room implements Bookable {
     protected List<Booking> bookings;
 
-    public BookableRoom(int roomNumber) {
-        super(roomNumber);
+    public BookableRoom() {
+        super();
         bookings = new ArrayList<>();
     }
 
