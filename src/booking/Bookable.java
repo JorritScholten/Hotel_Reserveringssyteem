@@ -14,7 +14,7 @@ public interface Bookable {
      * @return Booking object for room if successful.
      * @throws AlreadyBookedException when room is already booked at specified time.
      */
-    Booking Book(Guest guest, Date startOfBooking, Date endOfBooking) throws AlreadyBookedException;
+    Booking Book(Guest guest, Date startOfBooking, Date endOfBooking, boolean rentLocker) throws AlreadyBookedException;
 
     /**
      * Get list of bookings this room has.

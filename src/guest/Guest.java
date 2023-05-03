@@ -5,6 +5,11 @@ import java.util.List;
 
 public class Guest {
     final private String name;
+    public static List<Guest> GUESTS;
+
+    public String getName() {
+        return name;
+    }
 
     public Guest(String name) {
         this.name = name;

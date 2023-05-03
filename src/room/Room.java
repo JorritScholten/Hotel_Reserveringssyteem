@@ -12,6 +12,7 @@ public abstract class Room {
     private static final Set<Integer> roomNumbers = new HashSet<>();
     private int roomNumber;
     private boolean lockerIsActive;
+    public static List<Room> ROOMS;
 
     //constructor
     public Room() {
