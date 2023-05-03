@@ -21,10 +21,15 @@ public class ConferenceRoom extends Room implements Bookable {
      * @throws AlreadyBookedException when room is already booked at specified time.
      */
     @Override
-    public Booking Book(Guest guest, Date startOfBooking, Date endOfBooking) throws AlreadyBookedException {
+    public Booking Book(Guest guest, Date startOfBooking, Date endOfBooking)
+            throws AlreadyBookedException, IllegalArgumentException {
+        if (startOfBooking.after(endOfBooking)) {
+            throw new IllegalArgumentException("Invalid booking: it ends before it begins.");
+        }
         if (bookings.isEmpty()) {
             Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
             bookings.add(booking);
+            Bookable.BOOKINGS.add(booking);
             return booking;
         } else {
             Booking previous = null, next = null;
@@ -43,11 +48,30 @@ public class ConferenceRoom extends Room implements Bookable {
             if (previous == null && next == null) {
                 throw new AlreadyBookedException("Booking encompasses all previous bookings.");
             } else if (previous == null) {
-
+                // check with isBooked() to see if startOfBooking or endOfBooking is in a timeslot
+                if (isBooked(startOfBooking) || isBooked(endOfBooking)) {
+                    throw new AlreadyBookedException("Invalid booking: partial overlap of timeslot.");
+                } else {
+                    Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+                    bookings.add(0, booking);
+                    Bookable.BOOKINGS.add(booking);
+                    return booking;
+                }
             } else if (next == null) {
                 // check with isBooked() to see if startOfBooking or endOfBooking is in a timeslot
-            } else if (/* check if previous and next are directly after each other*/) {
-                // no problem
+                if (isBooked(startOfBooking) || isBooked(endOfBooking)) {
+                    throw new AlreadyBookedException("Invalid booking: partial overlap of timeslot.");
+                } else {
+                    Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+                    bookings.add(booking);
+                    Bookable.BOOKINGS.add(booking);
+                    return booking;
+                }
+            } else if (bookings.indexOf(next) + 1 == bookings.indexOf(previous)) {
+                Booking booking = new Booking(this, guest, startOfBooking, endOfBooking);
+                bookings.add(bookings.indexOf(previous) + 1, booking);
+                Bookable.BOOKINGS.add(booking);
+                return booking;
             } else {
                 throw new AlreadyBookedException("Booking encompasses at least 1 previous booking.");
             }
